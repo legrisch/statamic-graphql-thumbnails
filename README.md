@@ -2,6 +2,30 @@
 
 This little Statamic addon provides a useful `thumbnail` field on all `AssetInterface` fields taking an argument `width` to return a thumbnail with the defined width.
 
+## Installation
+
+Run `composer composer require legrisch/statamic-graphql-thumbnails`
+
+## Usage
+
+The `thumbnail`field requires an argument `width`with an integer defining the width:
+
+```graphql
+asset {
+  thumbnail(width: 100)
+}
+```
+
+yields
+
+```json
+"asset": {
+  "thumbnail": "http://absolute.url/to/thumbnail-with-100px-width.jpg"
+}
+```
+
+### Full Examples
+
 ```graphql
 query MyQuery {
   entries(collection: "pages") {
@@ -16,7 +40,9 @@ query MyQuery {
   }
 }
 ```
+
 yields
+
 ```json
 {
   "data": {
@@ -54,7 +80,9 @@ query MyQuery {
   }
 }
 ```
+
 yields
+
 ```json
 {
   "data": {
