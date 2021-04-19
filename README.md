@@ -26,6 +26,8 @@ yields
 
 ### Full Examples
 
+#### Query single thumbnail
+
 ```graphql
 query MyQuery {
   entries(collection: "pages") {
@@ -60,9 +62,9 @@ yields
 }
 ```
 
-## Query multiple thumbnails
+#### Query multiple thumbnails
 
-Use it with a GraphQL alias to query multiple thumbnails:
+Use GraphQL aliases to query multiple thumbnails:
 
 ```graphql
 query MyQuery {
