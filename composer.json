@@ -3,7 +3,7 @@
     "description": "A Statamic CMS Addon that provides a convenient thumbnail field on all AssetInterface fields.",
     "require": {
         "php": "^7.3 || ^8.0",
-        "statamic/cms": "^3.0"
+        "statamic/cms": "^3.1"
     },
     "autoload": {
         "psr-4": {
