@@ -1,6 +1,6 @@
 {
     "name": "legrisch/statamic-graphql-thumbnails",
-    "description": "A Statamic CMS Addon that provides a convenient thumbnail field on all AssetInterface fields.",
+    "description": "A Statamic CMS GraphQL Addon that provides a convenient thumbnail field on all asset fields.",
     "require": {
         "php": "^7.3 || ^8.0",
         "statamic/cms": "^3.1"
@@ -13,7 +13,7 @@
     "extra": {
         "statamic": {
             "name": "GraphQLThumbnails",
-            "description": "Provides a convenient thumbnail field on all AssetInterface fields."
+            "description": "Provides a convenient GraphQL thumbnail field on all asset fields."
         },
         "laravel": {
             "providers": [
