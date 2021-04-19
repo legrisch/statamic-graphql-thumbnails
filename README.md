@@ -46,8 +46,8 @@ query MyQuery {
         image {
           id
           thumbnailSmall: thumbnail(width: 100)
-          thumbnailLarge: thumbnail(width: 500)
           thumbnailMedium: thumbnail(width: 250)
+          thumbnailLarge: thumbnail(width: 500)
         }
       }
     }
