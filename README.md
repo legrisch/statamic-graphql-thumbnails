@@ -8,7 +8,7 @@ Run `composer composer require legrisch/statamic-graphql-thumbnails`
 
 ## Usage
 
-The `thumbnail`field requires an argument `width`with an integer defining the width:
+The `thumbnail` field requires an argument `width` with an integer defining the width:
 
 ```graphql
 asset {
