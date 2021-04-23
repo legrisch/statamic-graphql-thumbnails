@@ -17,7 +17,7 @@
         },
         "laravel": {
             "providers": [
-                "Legrisch\\GraphQLThumbnails\\ServiceProvider"
+                "Legrisch\\GraphQLThumbnails\\ThumbnailsServiceProvider"
             ]
         }
     }
