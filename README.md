@@ -1,6 +1,6 @@
 # GraphQL Thumbnails for Statamic CMS
 
-This little Statamic addon provides a useful `thumbnail` field on all `AssetInterface` fields taking an argument `width` to return a thumbnail with the defined width.
+This little Statamic addon provides a useful `thumbnail` field on all `AssetInterface` fields taking the arguments `width`, `height` and `fit` to return an absolute thumbnail url.
 
 ## Installation
 
@@ -8,7 +8,7 @@ Run `composer composer require legrisch/statamic-graphql-thumbnails`
 
 ## Usage
 
-The `thumbnail` field requires an argument `width` with an integer defining the width:
+The `thumbnail` field requires an argument `width` or `height` with an integer. Additionally you may specify the parameter `fit`. The possible values are: `contain`, `max`, `fill`, `stretch`, `crop`, `crop_focal` with the default being `crop_focal`.
 
 ```graphql
 asset {
@@ -55,7 +55,7 @@ yields
             "id": "assets::20210409232458.jpg",
             "thumbnail": "http://absolute.url/to/thumbnail.jpg"
           }
-        },
+        }
       ]
     }
   }
@@ -76,6 +76,7 @@ query MyQuery {
           thumbnailSmall: thumbnail(width: 100)
           thumbnailMedium: thumbnail(width: 250)
           thumbnailLarge: thumbnail(width: 500)
+          thumbnailSquare: thumbnail(width: 500, height: 200, fit: "crop")
         }
       }
     }
@@ -95,15 +96,8 @@ yields
             "id": "assets::20210409232458.jpg",
             "thumbnailSmall": "http://absolute.url/to/small/thumbnail.jpg",
             "thumbnailMedium": "http://absolute.url/to/medium/thumbnail.jpg",
-            "thumbnailLarge": "http://absolute.url/to/large/thumbnail.jpg"
-          }
-        },
-        {
-          "image": {
-            "id": "assets::20210409232458.jpg",
-            "thumbnailSmall": "http://absolute.url/to/small/thumbnail.jpg",
-            "thumbnailMedium": "http://absolute.url/to/medium/thumbnail.jpg",
-            "thumbnailLarge": "http://absolute.url/to/large/thumbnail.jpg"
+            "thumbnailLarge": "http://absolute.url/to/large/thumbnail.jpg",
+            "thumbnailSquare": "http://absolute.url/to/square/thumbnail.jpg"
           }
         }
       ]
