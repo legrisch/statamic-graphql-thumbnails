@@ -8,5 +8,8 @@ return [
 
   'formats_section' => 'Formats',
   'formats_section_title' => 'Thumbnail formats',
-  'formats_section_instructions' => "By defining named formats you are able to query thumbnails by name: `thumbnail(name: \"small\")`",
+  'formats_section_instructions' => "By defining named formats you are able to query thumbnails by name: `thumbnail(name: \"small\")`.",
+
+  'add_format_fields_title' => 'Add format fields',
+  'add_format_fields_instructions' => "This allows to query formats without passing parameters. Query for a thumbnail format with the name small: `thumbnail_small`.",
 ];

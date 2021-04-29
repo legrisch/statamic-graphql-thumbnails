@@ -87,6 +87,14 @@ class SettingsController extends CpController
             'display' => __('gql-thumbnails::general.formats_section_title'),
             'instructions' => __('gql-thumbnails::general.formats_section_instructions')
           ],
+          'add_format_fields' => [
+            'display' => __('gql-thumbnails::general.add_format_fields_title'),
+            'instructions' => __('gql-thumbnails::general.add_format_fields_instructions'),
+            'type' => 'toggle',
+            'icon' => 'toggle',
+            'listable' => 'hidden',
+            'validate' => ['required']
+          ],
           'formats' => [
             'type' => 'replicator',
             'display' => 'Formats',

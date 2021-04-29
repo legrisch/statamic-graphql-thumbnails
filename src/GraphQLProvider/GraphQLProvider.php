@@ -26,6 +26,11 @@ class GraphQLProvider
     return self::getSettings()['build_jit'] ?? false;
   }
 
+  private static function addFormatFields(): bool
+  {
+    return self::getSettings()['add_format_fields'] ?? false;
+  }
+
   private static function formats()
   {
     $enabledFormats = array_values(array_filter(self::getSettings()['formats'] ?? [], function ($format) {
@@ -208,5 +213,26 @@ class GraphQLProvider
         },
       ];
     });
+
+    if (!self::hasFormats() || !self::addFormatFields()) return;
+
+    foreach (self::formats() as $format) {
+      $name = $format['name'];
+      GraphQL::addField('AssetInterface', 'thumbnail_' . $name, function () use ($format) {
+        return [
+          'type' => GraphQL::string(),
+          'resolve' => function (Asset $asset) use ($format) {
+            if ($asset === null || !$asset->isImage()) return null;
+
+            return self::manipulateImage(
+              $asset,
+              $format['width'] ?? null,
+              $format['height'] ?? null,
+              $format['fit'] ?? null
+            );
+          }
+        ];
+      });
+    }
   }
 }
