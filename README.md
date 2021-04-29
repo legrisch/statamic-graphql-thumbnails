@@ -1,12 +1,45 @@
 # GraphQL Thumbnails for Statamic CMS
 
-This little Statamic addon provides a useful `thumbnail` field on all `AssetInterface` fields taking the arguments `width`, `height` and `fit` to return an absolute thumbnail url.
+This Statamic GraphQL addon provides a `thumbnail` field on all `AssetInterface` fields. Either provide the argument `name` to query by predefined formats or use Just-In-Time thumbnail generation and provide `width`, `height` or `fit`.
+
+## Features
+
+- Predefined thumbnail Formats: Query by `name`
+- Just-In-Time thumbnail: Query by `width`, `height` or `fit`
+- Control Panel UI to define formats and enable/disable JIT thumbnail generation
+- Permissions for managing GraphQL thumbnail Settings
+
+![GraphQL Thumbnails for Statamic CMS](https://user-images.githubusercontent.com/46897060/116618272-1c6ef680-a93f-11eb-82ef-932761ea6ee1.png)
 
 ## Installation
 
 Run `composer composer require legrisch/statamic-graphql-thumbnails`
 
+## Setup
+
+After installation, you must visit the control panel to define formats to query for or enable the JIT thumbnail generation.
+
 ## Usage
+
+### Formats Usage
+
+The `thumbnail` field requires an argument `name` which resolves to the name of one of your formats.
+
+```graphql
+asset {
+  thumbnail(name: "small")
+}
+```
+
+yields
+
+```json
+"asset": {
+  "thumbnail": "http://absolute.url/to/thumbnail-small.jpg"
+}
+```
+
+### JIT Usage
 
 The `thumbnail` field requires an argument `width` or `height` with an integer. Additionally you may specify the parameter `fit`. The possible values are: `contain`, `max`, `fill`, `stretch`, `crop`, `crop_focal` with the default being `crop_focal`.
 

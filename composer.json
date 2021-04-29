@@ -1,24 +1,24 @@
 {
-    "name": "legrisch/statamic-graphql-thumbnails",
-    "description": "A Statamic CMS GraphQL Addon that provides a convenient thumbnail field on all asset fields.",
-    "require": {
-        "php": "^7.3 || ^8.0",
-        "statamic/cms": "^3.1"
-    },
-    "autoload": {
-        "psr-4": {
-            "Legrisch\\GraphQLThumbnails\\": "src"
-        }
-    },
-    "extra": {
-        "statamic": {
-            "name": "GraphQLThumbnails",
-            "description": "Provides a convenient GraphQL thumbnail field on all asset fields."
-        },
-        "laravel": {
-            "providers": [
-                "Legrisch\\GraphQLThumbnails\\ThumbnailsServiceProvider"
-            ]
-        }
+  "name": "legrisch/statamic-graphql-thumbnails",
+  "description": "A Statamic CMS GraphQL Addon that provides a convenient thumbnail field on all asset fields.",
+  "require": {
+    "php": "^7.3 || ^8.0",
+    "statamic/cms": "^3.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Legrisch\\GraphQLThumbnails\\": "src"
     }
+  },
+  "extra": {
+    "statamic": {
+      "name": "GraphQLThumbnails",
+      "description": "Provides a convenient GraphQL thumbnail field on all asset fields."
+    },
+    "laravel": {
+      "providers": [
+        "Legrisch\\GraphQLThumbnails\\ServiceProvider"
+      ]
+    }
+  }
 }
