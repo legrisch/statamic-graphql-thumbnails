@@ -1,6 +1,8 @@
 <?php
 
 return [
+  'git-commit-message' => 'GraphQL thumbnail settings changed.',
+
   'general_section' => 'General',
   'general_section_title' => 'Just-In-Time Thumbnails',
   'general_section_instructions' => "While it's possible to generate Thumbnails just-in-time, for security reasons it is not recommended. It is possible for attackers to request a lot of thumbnails to slow down and possibly crash your server. Use with care. Example: `thumbnail(width: 100, crop: \"fill\")`",
