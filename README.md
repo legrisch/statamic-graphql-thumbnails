@@ -13,7 +13,7 @@ This Statamic GraphQL addon provides a `thumbnail` field on all `AssetInterface`
 
 ## Installation
 
-Run `composer composer require legrisch/statamic-graphql-thumbnails`
+Run `composer require legrisch/statamic-graphql-thumbnails`
 
 ## Setup
 
