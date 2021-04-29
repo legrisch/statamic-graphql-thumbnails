@@ -9,7 +9,7 @@ This Statamic GraphQL addon provides a `thumbnail` field on all `AssetInterface`
 - Control Panel UI to define formats and enable/disable JIT thumbnail generation
 - Permissions for managing GraphQL thumbnail Settings
 
-![GraphQL Thumbnails for Statamic CMS](https://user-images.githubusercontent.com/46897060/116618272-1c6ef680-a93f-11eb-82ef-932761ea6ee1.png)
+![GraphQL Thumbnails for Statamic CMS](https://user-images.githubusercontent.com/46897060/116623211-2fd19000-a946-11eb-8d45-f8908499e542.png)
 
 ## Installation
 
