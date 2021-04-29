@@ -1,10 +1,18 @@
 {
   "name": "legrisch/statamic-graphql-thumbnails",
   "description": "A Statamic CMS GraphQL Addon that provides a convenient thumbnail field on all asset fields.",
+  "type": "statamic-addon",
   "require": {
     "php": "^7.3 || ^8.0",
     "statamic/cms": "^3.1"
   },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Grischa Erbe",
+      "email": "grischa.erbe@googlemail.com"
+    }
+  ],
   "autoload": {
     "psr-4": {
       "Legrisch\\GraphQLThumbnails\\": "src"

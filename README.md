@@ -141,4 +141,6 @@ yields
 
 ---
 
-This addon follows [the official example](https://statamic.dev/graphql#custom-fields) and wraps it in an easy-to-use addon.
+## License
+
+This project is licensed under the MIT License.
