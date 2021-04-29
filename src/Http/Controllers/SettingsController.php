@@ -62,9 +62,6 @@ class SettingsController extends CpController
 
     if (Config::get('statamic.git.enabled', false)) {
       Git::commit(__('gql-thumbnails::general.git-commit-message'));
-      if (Config::get('statamic.git.push', false)) {
-        Git::push();
-      }
     }
   }
 
