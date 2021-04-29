@@ -5,6 +5,7 @@ namespace Legrisch\GraphQLThumbnails\Http\Controllers;
 use Legrisch\GraphQLThumbnails\Settings\Settings;
 use Illuminate\Http\Request;
 use Statamic\Facades\Blueprint;
+use Statamic\Facades\Config;
 use Statamic\Facades\Git;
 use Statamic\Facades\User;
 use Statamic\Http\Controllers\CP\CpController;
@@ -59,7 +60,12 @@ class SettingsController extends CpController
 
     Settings::write($values->toArray());
 
-    Git::commit(__('gql-thumbnails::general.git-commit-message'));
+    if (Config::get('statamic.git.enabled', false)) {
+      Git::commit(__('gql-thumbnails::general.git-commit-message'));
+      if (Config::get('statamic.git.push', false)) {
+        Git::push();
+      }
+    }
   }
 
   protected function formBlueprint()
