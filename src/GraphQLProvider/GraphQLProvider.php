@@ -104,8 +104,8 @@ class GraphQLProvider
     ?int $width,
     ?int $height,
     ?string $fit,
-    ?string $name,
-  ): void {
+    ?string $name
+  ) {
     if (!isset($name) && !isset($width) && !isset($height) && !isset($fit)) {
       throw new \Exception("No arguments provided. Please provide either JIT parameters ('width' or 'height' and optionally 'fit') or a format ('name').", 1);
     }
