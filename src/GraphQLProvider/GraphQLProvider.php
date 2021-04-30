@@ -83,7 +83,7 @@ class GraphQLProvider
     return false;
   }
 
-  private static function manipulateImage(Asset $asset, int|null $width, int|null $height, string|null $fit): string
+  private static function manipulateImage(Asset $asset, ?int $width, ?int $height, ?string $fit): string
   {
     $image = Image::manipulate($asset);
 
@@ -101,10 +101,10 @@ class GraphQLProvider
   }
 
   private static function validateArguments(
-    int|null $width,
-    int|null $height,
-    string|null $fit,
-    string|null $name,
+    ?int $width,
+    ?int $height,
+    ?string $fit,
+    ?string $name,
   ): void {
     if (!isset($name) && !isset($width) && !isset($height) && !isset($fit)) {
       throw new \Exception("No arguments provided. Please provide either JIT parameters ('width' or 'height' and optionally 'fit') or a format ('name').", 1);
