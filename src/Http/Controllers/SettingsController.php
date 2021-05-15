@@ -71,10 +71,18 @@ class SettingsController extends CpController
       'name' => [
         'display' => __('gql-thumbnails::general.general_section'),
         'fields' => [
-          'general_section' => [
+          'absolute_urls' => [
+            'display' => __('gql-thumbnails::general.absolute_urls'),
+            'type' => 'toggle',
+            'icon' => 'toggle',
+            'default' => true,
+            'listable' => 'hidden',
+            'validate' => ['required']
+          ],
+          'general_section_jit' => [
             'type' => 'section',
-            'display' => __('gql-thumbnails::general.general_section_title'),
-            'instructions' => __('gql-thumbnails::general.general_section_instructions')
+            'display' => __('gql-thumbnails::general.general_section_jit_title'),
+            'instructions' => __('gql-thumbnails::general.general_section_jit_instructions')
           ],
           'build_jit' => [
             'display' => __('gql-thumbnails::general.build_jit'),

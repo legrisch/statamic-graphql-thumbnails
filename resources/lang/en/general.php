@@ -3,10 +3,12 @@
 return [
   'git-commit-message' => 'GraphQL thumbnail settings changed.',
 
+  'absolute_urls' => 'Use absolute thumbnail URLs',
+
   'general_section' => 'General',
-  'general_section_title' => 'Just-In-Time Thumbnails',
-  'general_section_instructions' => "While it's possible to generate Thumbnails just-in-time, for security reasons it is not recommended. It is possible for attackers to request a lot of thumbnails to slow down and possibly crash your server. Use with care. Example: `thumbnail(width: 100, crop: \"fill\")`",
-  'build_jit' => 'Use Just-In-Time Thumbnails',
+  'general_section_jit_title' => 'Just-In-Time thumbnails',
+  'general_section_jit_instructions' => "While it's possible to generate thumbnails just-in-time, for security reasons it is not recommended. It is possible for attackers to request a lot of thumbnails to slow down and possibly crash your server. Use with care. Example: `thumbnail(width: 100, crop: \"fill\")`",
+  'build_jit' => 'Use Just-In-Time thumbnails',
 
   'formats_section' => 'Formats',
   'formats_section_title' => 'Thumbnail formats',

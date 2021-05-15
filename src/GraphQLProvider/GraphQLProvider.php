@@ -26,6 +26,11 @@ class GraphQLProvider
     return self::getSettings()['build_jit'] ?? false;
   }
 
+  private static function absoluteUrls(): bool
+  {
+    return self::getSettings()['absolute_urls'] ?? true;
+  }
+
   private static function addFormatFields(): bool
   {
     return self::getSettings()['add_format_fields'] ?? false;
@@ -97,7 +102,11 @@ class GraphQLProvider
     $image = $fit ? $image->fit($fit) : $image->fit("crop_focal");
 
     $url = $image->build();
-    return URL::makeAbsolute($url);
+
+    if (self::absoluteUrls()) {
+      return URL::makeAbsolute($url);
+    }
+    return URL::makeRelative($url);
   }
 
   private static function validateArguments(
