@@ -174,7 +174,7 @@ class SettingsController extends CpController
                       'display' => "Width",
                       'type' => "integer",
                       'icon' => "integer",
-                      'width' => 33,
+                      'width' => 25,
                       'listable' => "hidden"
                     ],
                   ],
@@ -184,7 +184,7 @@ class SettingsController extends CpController
                       'display' => "Height",
                       'type' => "integer",
                       'icon' => "integer",
-                      'width' => 33,
+                      'width' => 25,
                       'listable' => "hidden"
                     ],
                   ],
@@ -211,8 +211,18 @@ class SettingsController extends CpController
                       'type' => 'select',
                       'icon' => 'select',
                       'listable' => 'hidden',
-                      'width' => 33,
+                      'width' => 25,
                       'validate' => ['required']
+                    ],
+                  ],
+                  'include_in_srcset' => [
+                    'handle' => 'include_in_srcset',
+                    'field' => [
+                      'display' => __('gql-thumbnails::general.include_in_srcset_title'),
+                      'type' => 'toggle',
+                      'icon' => 'toggle',
+                      'width' => 25,
+                      'listable' => 'hidden',
                     ],
                   ],
                 ]

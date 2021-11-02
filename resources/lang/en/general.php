@@ -28,4 +28,6 @@ return [
 
   'placeholder_blur_title' => 'Placeholder blur amount',
   'placeholder_blur_instructions' => "Defaults to 5.",
+
+  'include_in_srcset_title' => 'Include in srcset',
 ];

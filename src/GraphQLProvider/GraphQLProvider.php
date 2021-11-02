@@ -304,7 +304,8 @@ class GraphQLProvider
 
             $srcsetItems = [];
             foreach (self::formats() as $format) {
-              if (!array_key_exists('width', $format)) continue;
+              $include = $format['include_in_srcset'] ?? false;
+              if (!$include || !array_key_exists('width', $format)) continue;
               $url = self::manipulateImage(
                 $asset,
                 $format['width'] ?? null,
