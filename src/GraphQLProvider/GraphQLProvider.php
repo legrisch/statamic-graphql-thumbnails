@@ -5,13 +5,32 @@ namespace Legrisch\GraphQLThumbnails\GraphQLProvider;
 use Statamic\Facades\GraphQL;
 use Statamic\Facades\Image;
 use Statamic\Facades\URL;
+use League\Glide\Server;
+use League\Flysystem\FileNotFoundException;
 use Illuminate\Support\Facades\Log;
 use Legrisch\GraphQLThumbnails\Settings\Settings;
 use Statamic\Assets\Asset;
+use Statamic\Imaging\ImageGenerator;
 
 class GraphQLProvider
 {
   public static $settings;
+  public static $imageGenerator;
+  public static $glideServer;
+
+  private static function getImageGenerator() {
+    if (!self::$imageGenerator) {
+      self::$imageGenerator = app(ImageGenerator::class);
+    }
+    return self::$imageGenerator;
+  }
+
+  private static function getGlideServer() {
+    if (!self::$glideServer) {
+      self::$glideServer = app(Server::class);
+    }
+    return self::$glideServer;
+  }
 
   private static function getSettings()
   {
@@ -39,6 +58,21 @@ class GraphQLProvider
   private static function addSrcset(): bool
   {
     return self::getSettings()['add_srcset'] ?? false;
+  }
+
+  private static function addPlaceholder(): bool
+  {
+    return self::getSettings()['add_placeholder'] ?? false;
+  }
+
+  private static function placeholderWidth(): int
+  {
+    return self::getSettings()['placeholder_width'] ?? 32;
+  }
+
+  private static function placeholderBlur(): int
+  {
+    return self::getSettings()['placeholder_blur'] ?? 5;
   }
 
   private static function formats()
@@ -112,6 +146,16 @@ class GraphQLProvider
       return URL::makeAbsolute($url);
     }
     return URL::makeRelative($url);
+  }
+
+  private static function makePlaceholder(Asset $asset, int $width = 32, int $blur = 5) {
+    $path = self::getImageGenerator()->generateByAsset($asset, [
+      'w' => $width,
+      'h' => round($width / $asset->ratio()),
+      'blur' => $blur,
+    ]);
+    $source = base64_encode(self::getGlideServer()->getCache()->read($path));
+    return "data:" . self::getGlideServer()->getCache()->getMimetype($path) . ";base64,{$source}";
   }
 
   private static function validateArguments(
@@ -267,11 +311,30 @@ class GraphQLProvider
                 $format['height'] ?? null,
                 $format['fit'] ?? null
               );
-
               array_push($srcsetItems, $url . " " .  $format['width'] . "w");
             }
 
             return join(', ', $srcsetItems);
+          }
+        ];
+      });
+    }
+
+    if (self::addPlaceholder()) {
+      GraphQL::addField('AssetInterface', 'placeholder', function () {
+        return [
+          'type' => GraphQL::string(),
+          'resolve' => function (Asset $asset) {
+            if ($asset === null || !$asset->isImage()) {
+              return null;
+            }
+
+            try {
+              $placeholderString = self::makePlaceholder($asset, self::placeholderWidth(), self::placeholderBlur());
+              return $placeholderString;
+            } catch (\Throwable $th) {
+              return null;
+            }
           }
         ];
       });

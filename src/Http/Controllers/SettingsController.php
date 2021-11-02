@@ -101,17 +101,48 @@ class SettingsController extends CpController
             'display' => __('gql-thumbnails::general.formats_section_title'),
             'instructions' => __('gql-thumbnails::general.formats_section_instructions')
           ],
-          'add_format_fields' => [
-            'display' => __('gql-thumbnails::general.add_format_fields_title'),
-            'instructions' => __('gql-thumbnails::general.add_format_fields_instructions'),
+          'add_srcset' => [
+            'display' => __('gql-thumbnails::general.add_srcset_title'),
+            'instructions' => __('gql-thumbnails::general.add_srcset_instructions'),
             'type' => 'toggle',
             'icon' => 'toggle',
             'listable' => 'hidden',
             'validate' => ['required']
           ],
-          'add_srcset' => [
-            'display' => __('gql-thumbnails::general.add_srcset_title'),
-            'instructions' => __('gql-thumbnails::general.add_srcset_instructions'),
+          'add_placeholder' => [
+            'display' => __('gql-thumbnails::general.add_placeholder_title'),
+            'instructions' => __('gql-thumbnails::general.add_placeholder_instructions'),
+            'type' => 'toggle',
+            'icon' => 'toggle',
+            'width' => 33,
+            'listable' => 'hidden',
+            'validate' => ['required']
+          ],
+          'placeholder_width' => [
+            'display' => __('gql-thumbnails::general.placeholder_width_title'),
+            'instructions' => __('gql-thumbnails::general.placeholder_width_instructions'),
+            'type' => 'integer',
+            'icon' => 'integer',
+            'width' => 33,
+            'listable' => 'hidden',
+            'if' => [
+              'add_placeholder' => 'equals true'
+            ]
+          ],
+          'placeholder_blur' => [
+            'display' => __('gql-thumbnails::general.placeholder_blur_title'),
+            'instructions' => __('gql-thumbnails::general.placeholder_blur_instructions'),
+            'type' => 'integer',
+            'icon' => 'integer',
+            'width' => 33,
+            'listable' => 'hidden',
+            'if' => [
+              'add_placeholder' => 'equals true'
+            ]
+          ],
+          'add_format_fields' => [
+            'display' => __('gql-thumbnails::general.add_format_fields_title'),
+            'instructions' => __('gql-thumbnails::general.add_format_fields_instructions'),
             'type' => 'toggle',
             'icon' => 'toggle',
             'listable' => 'hidden',
