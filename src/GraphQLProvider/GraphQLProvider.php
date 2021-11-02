@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Log;
 use Legrisch\GraphQLThumbnails\Settings\Settings;
 use Statamic\Assets\Asset;
 use Statamic\Imaging\ImageGenerator;
+use Statamic\Facades\Path;
+use Statamic\Support\Str;
 
 class GraphQLProvider
 {
@@ -89,6 +91,14 @@ class GraphQLProvider
     return count(self::formats()) > 0;
   }
 
+  private static function makeAbsoluteUrl(string $url) : string {
+    if (! Str::startsWith($url, '/')) {
+      return $url;
+    }
+
+    return Path::tidy(Str::ensureLeft($url, config('app.url')));
+  }
+
   private static function hasFormat(string $name)
   {
     if (!self::hasFormats()) return false;
@@ -143,7 +153,7 @@ class GraphQLProvider
     $url = $image->build();
 
     if (self::absoluteUrls()) {
-      return URL::makeAbsolute($url);
+      return self::makeAbsoluteUrl($url);
     }
     return URL::makeRelative($url);
   }
