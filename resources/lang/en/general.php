@@ -16,4 +16,7 @@ return [
 
   'add_format_fields_title' => 'Add format fields',
   'add_format_fields_instructions' => "This allows to query formats without passing parameters. Query for a thumbnail format with the name small: `thumbnail_small`.",
+
+  'add_srcset_title' => 'Add srcset field',
+  'add_srcset_instructions' => "This allows to directly query for a srcset with the provided formats.",
 ];

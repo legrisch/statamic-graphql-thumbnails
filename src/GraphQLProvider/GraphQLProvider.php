@@ -36,6 +36,11 @@ class GraphQLProvider
     return self::getSettings()['add_format_fields'] ?? false;
   }
 
+  private static function addSrcset(): bool
+  {
+    return self::getSettings()['add_srcset'] ?? false;
+  }
+
   private static function formats()
   {
     $enabledFormats = array_values(array_filter(self::getSettings()['formats'] ?? [], function ($format) {
@@ -223,22 +228,50 @@ class GraphQLProvider
       ];
     });
 
-    if (!self::hasFormats() || !self::addFormatFields()) return;
+    if (self::hasFormats() && self::addFormatFields()) {
+      foreach (self::formats() as $format) {
+        $name = $format['name'];
+        GraphQL::addField('AssetInterface', 'thumbnail_' . $name, function () use ($format) {
+          return [
+            'type' => GraphQL::string(),
+            'resolve' => function (Asset $asset) use ($format) {
+              if ($asset === null || !$asset->isImage()) return null;
+  
+              return self::manipulateImage(
+                $asset,
+                $format['width'] ?? null,
+                $format['height'] ?? null,
+                $format['fit'] ?? null
+              );
+            }
+          ];
+        });
+      }
+    }
 
-    foreach (self::formats() as $format) {
-      $name = $format['name'];
-      GraphQL::addField('AssetInterface', 'thumbnail_' . $name, function () use ($format) {
+    if (self::hasFormats() && self::addSrcset()) {
+      GraphQL::addField('AssetInterface', 'srcset', function () {
         return [
           'type' => GraphQL::string(),
-          'resolve' => function (Asset $asset) use ($format) {
-            if ($asset === null || !$asset->isImage()) return null;
+          'resolve' => function (Asset $asset) {
+            if ($asset === null || !$asset->isImage()) {
+              return null;
+            }
 
-            return self::manipulateImage(
-              $asset,
-              $format['width'] ?? null,
-              $format['height'] ?? null,
-              $format['fit'] ?? null
-            );
+            $srcsetItems = [];
+            foreach (self::formats() as $format) {
+              if (!array_key_exists('width', $format)) continue;
+              $url = self::manipulateImage(
+                $asset,
+                $format['width'] ?? null,
+                $format['height'] ?? null,
+                $format['fit'] ?? null
+              );
+
+              array_push($srcsetItems, $url . " " .  $format['width'] . "w");
+            }
+
+            return join(', ', $srcsetItems);
           }
         ];
       });

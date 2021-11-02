@@ -109,6 +109,14 @@ class SettingsController extends CpController
             'listable' => 'hidden',
             'validate' => ['required']
           ],
+          'add_srcset' => [
+            'display' => __('gql-thumbnails::general.add_srcset_title'),
+            'instructions' => __('gql-thumbnails::general.add_srcset_instructions'),
+            'type' => 'toggle',
+            'icon' => 'toggle',
+            'listable' => 'hidden',
+            'validate' => ['required']
+          ],
           'formats' => [
             'type' => 'replicator',
             'display' => 'Formats',

@@ -25,9 +25,12 @@ After installation, you must visit the control panel to define formats to query 
 
 The `thumbnail` field requires an argument `name` which resolves to the name of one of your formats.
 
+If formats are defined, you can also directly access a property `srcset` on the Asset.
+
 ```graphql
 asset {
   thumbnail(name: "small")
+  srcset
 }
 ```
 
@@ -36,6 +39,7 @@ yields
 ```json
 "asset": {
   "thumbnail": "http://absolute.url/to/thumbnail-small.jpg"
+  "srcset": "http://absolute.url/to/thumbnail-small.jpg 500w, http://absolute.url/to/thumbnail-medium.jpg 1000w"
 }
 ```
 
