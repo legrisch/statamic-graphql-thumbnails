@@ -304,15 +304,19 @@ class GraphQLProvider
 
             $srcsetItems = [];
             foreach (self::formats() as $format) {
-              $include = $format['include_in_srcset'] ?? false;
-              if (!$include || !array_key_exists('width', $format)) continue;
-              $url = self::manipulateImage(
-                $asset,
-                $format['width'] ?? null,
-                $format['height'] ?? null,
-                $format['fit'] ?? null
-              );
-              array_push($srcsetItems, $url . " " .  $format['width'] . "w");
+              try {
+                $include = $format['include_in_srcset'] ?? false;
+                if (!$include || !array_key_exists('width', $format)) continue;
+                $formatLargerThanImage = $format['width'] > $asset->width();
+                if ($formatLargerThanImage) continue;
+                $url = self::manipulateImage(
+                  $asset,
+                  $format['width'] ?? null,
+                  $format['height'] ?? null,
+                  $format['fit'] ?? null
+                );
+                array_push($srcsetItems, $url . " " .  $format['width'] . "w");
+              } catch (\Throwable $th) {}
             }
 
             return join(', ', $srcsetItems);
