@@ -30,4 +30,11 @@ return [
   'placeholder_blur_instructions' => "Defaults to 5.",
 
   'include_in_srcset_title' => 'Include in srcset',
+  'include_in_srcset_description' => '&nbsp;',
+
+  'base64_encode_title' => 'Base64 string',
+  'base64_encode_description' => 'Useful for placeholders',
+
+  'blur_amount_title' => 'Blur amount',
+  'blur_amount_description' => 'Useful for placeholders',
 ];

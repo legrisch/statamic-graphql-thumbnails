@@ -109,37 +109,6 @@ class SettingsController extends CpController
             'listable' => 'hidden',
             'validate' => ['required']
           ],
-          'add_placeholder' => [
-            'display' => __('gql-thumbnails::general.add_placeholder_title'),
-            'instructions' => __('gql-thumbnails::general.add_placeholder_instructions'),
-            'type' => 'toggle',
-            'icon' => 'toggle',
-            'width' => 33,
-            'listable' => 'hidden',
-            'validate' => ['required']
-          ],
-          'placeholder_width' => [
-            'display' => __('gql-thumbnails::general.placeholder_width_title'),
-            'instructions' => __('gql-thumbnails::general.placeholder_width_instructions'),
-            'type' => 'integer',
-            'icon' => 'integer',
-            'width' => 33,
-            'listable' => 'hidden',
-            'if' => [
-              'add_placeholder' => 'equals true'
-            ]
-          ],
-          'placeholder_blur' => [
-            'display' => __('gql-thumbnails::general.placeholder_blur_title'),
-            'instructions' => __('gql-thumbnails::general.placeholder_blur_instructions'),
-            'type' => 'integer',
-            'icon' => 'integer',
-            'width' => 33,
-            'listable' => 'hidden',
-            'if' => [
-              'add_placeholder' => 'equals true'
-            ]
-          ],
           'add_format_fields' => [
             'display' => __('gql-thumbnails::general.add_format_fields_title'),
             'instructions' => __('gql-thumbnails::general.add_format_fields_instructions'),
@@ -174,7 +143,7 @@ class SettingsController extends CpController
                       'display' => "Width",
                       'type' => "integer",
                       'icon' => "integer",
-                      'width' => 25,
+                      'width' => 33,
                       'listable' => "hidden"
                     ],
                   ],
@@ -184,7 +153,7 @@ class SettingsController extends CpController
                       'display' => "Height",
                       'type' => "integer",
                       'icon' => "integer",
-                      'width' => 25,
+                      'width' => 33,
                       'listable' => "hidden"
                     ],
                   ],
@@ -211,7 +180,7 @@ class SettingsController extends CpController
                       'type' => 'select',
                       'icon' => 'select',
                       'listable' => 'hidden',
-                      'width' => 25,
+                      'width' => 33,
                       'validate' => ['required']
                     ],
                   ],
@@ -219,9 +188,34 @@ class SettingsController extends CpController
                     'handle' => 'include_in_srcset',
                     'field' => [
                       'display' => __('gql-thumbnails::general.include_in_srcset_title'),
+                      'instructions' => __('gql-thumbnails::general.include_in_srcset_description'),
                       'type' => 'toggle',
                       'icon' => 'toggle',
-                      'width' => 25,
+                      'width' => 33,
+                      'listable' => 'hidden',
+                    ],
+                  ],
+                  'base64_encode' => [
+                    'handle' => 'base64_encode',
+                    'field' => [
+                      'display' => __('gql-thumbnails::general.base64_encode_title'),
+                      'instructions' => __('gql-thumbnails::general.base64_encode_description'),
+                      'type' => 'toggle',
+                      'icon' => 'toggle',
+                      'default' => false,
+                      'width' => 33,
+                      'listable' => 'hidden',
+                    ],
+                  ],
+                  'blur_amount' => [
+                    'handle' => 'blur_amount',
+                    'field' => [
+                      'display' => __('gql-thumbnails::general.blur_amount_title'),
+                      'instructions' => __('gql-thumbnails::general.blur_amount_description'),
+                      'type' => 'integer',
+                      'icon' => 'integer',
+                      'default' => false,
+                      'width' => 33,
                       'listable' => 'hidden',
                     ],
                   ],

@@ -27,13 +27,11 @@ The `thumbnail` field requires an argument `name` which resolves to the name of 
 
 If formats are defined, you can also directly access a property `srcset` on the Asset.
 
-The field `placeholder` returns a base64 encoded image to use as a lazyload placeholder. The width and the amount of blur can be adjusted in the settings.
 
 ```graphql
 asset {
   thumbnail(name: "small")
   srcset
-  placeholder
 }
 ```
 
@@ -43,7 +41,6 @@ yields
 "asset": {
   "thumbnail": "http://absolute.url/to/thumbnail-small.jpg",
   "srcset": "http://absolute.url/to/thumbnail-small.jpg 500w, http://absolute.url/to/thumbnail-medium.jpg 1000w",
-  "placeholder": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD//gA7Q1JFQVRPUjogZ2QtanBlZyB2MS4wICh1…"
 }
 ```
 

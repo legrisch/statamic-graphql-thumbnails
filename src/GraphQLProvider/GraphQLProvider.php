@@ -8,6 +8,7 @@ use Statamic\Facades\URL;
 use League\Glide\Server;
 use Illuminate\Support\Facades\Log;
 use Legrisch\GraphQLThumbnails\Settings\Settings;
+use phpDocumentor\Reflection\Types\Boolean;
 use Statamic\Assets\Asset;
 use Statamic\Imaging\ImageGenerator;
 use Statamic\Support\Str;
@@ -18,7 +19,7 @@ class GraphQLProvider
   public static $imageGenerator;
   public static $glideServer;
 
-  private static function getImageGenerator() {
+  private static function getImageGenerator(): ImageGenerator {
     if (!self::$imageGenerator) {
       self::$imageGenerator = app(ImageGenerator::class);
     }
@@ -134,35 +135,37 @@ class GraphQLProvider
     return false;
   }
 
-  private static function manipulateImage(Asset $asset, ?int $width, ?int $height, ?string $fit): string
+  private static function manipulateImage(Asset $asset, ?int $width, ?int $height, ?string $fit, ?int $blur_amount, ?bool $base64Encode): string
   {
-    $image = Image::manipulate($asset);
-
+    $options = [];
+    
     if ($width) {
-      $image = $image->width($width);
+      $options['w'] = $width;
     }
     if ($height) {
-      $image = $image->height($height);
+      $options['h'] = $height;
+    }
+    if ($blur_amount) {
+      $options['blur'] = $blur_amount;
+    }
+    if ($fit) {
+      $options['fit'] = $fit;
+    } else {
+      $options['fit'] = "crop_focal";
     }
 
-    $image = $fit ? $image->fit($fit) : $image->fit("crop_focal");
 
-    $url = $image->build();
-
+    if ($base64Encode) {
+      $path = self::getImageGenerator()->generateByAsset($asset, $options);
+      $source = base64_encode(self::getGlideServer()->getCache()->read($path));
+      return "data:" . self::getGlideServer()->getCache()->getMimetype($path) . ";base64,{$source}";
+    } else {
+      $url = Image::manipulate($asset, $options);
     if (self::absoluteUrls()) {
       return self::makeAbsoluteUrl($url);
     }
     return URL::makeRelative($url);
-  }
-
-  private static function makePlaceholder(Asset $asset, int $width = 32, int $blur = 5) {
-    $path = self::getImageGenerator()->generateByAsset($asset, [
-      'w' => $width,
-      'h' => round($width / $asset->ratio()),
-      'blur' => $blur,
-    ]);
-    $source = base64_encode(self::getGlideServer()->getCache()->read($path));
-    return "data:" . self::getGlideServer()->getCache()->getMimetype($path) . ";base64,{$source}";
+    }
   }
 
   private static function validateArguments(
@@ -266,7 +269,9 @@ class GraphQLProvider
                 $asset,
                 $format['width'] ?? null,
                 $format['height'] ?? null,
-                $format['fit'] ?? null
+                $format['fit'] ?? null,
+                $format['blur_amount'] ?? null,
+                $format['base64_encode'] ?? false,
               );
             } else {
               return self::manipulateImage($asset, $width, $height, $fit);
@@ -292,7 +297,9 @@ class GraphQLProvider
                 $asset,
                 $format['width'] ?? null,
                 $format['height'] ?? null,
-                $format['fit'] ?? null
+                $format['fit'] ?? null,
+                $format['blur_amount'] ?? null,
+                $format['base64_encode'] ?? false,
               );
             }
           ];
@@ -320,33 +327,15 @@ class GraphQLProvider
                   $asset,
                   $format['width'] ?? null,
                   $format['height'] ?? null,
-                  $format['fit'] ?? null
+                  $format['fit'] ?? null,
+                  $format['blur_amount'] ?? null,
+                  $format['base64_encode'] ?? false,
                 );
                 array_push($srcsetItems, $url . " " .  $format['width'] . "w");
               } catch (\Throwable $th) {}
             }
 
             return join(', ', $srcsetItems);
-          }
-        ];
-      });
-    }
-
-    if (self::addPlaceholder()) {
-      GraphQL::addField('AssetInterface', 'placeholder', function () {
-        return [
-          'type' => GraphQL::string(),
-          'resolve' => function (Asset $asset) {
-            if ($asset === null || !$asset->isImage()) {
-              return null;
-            }
-
-            try {
-              $placeholderString = self::makePlaceholder($asset, self::placeholderWidth(), self::placeholderBlur());
-              return $placeholderString;
-            } catch (\Throwable $th) {
-              return null;
-            }
           }
         ];
       });
